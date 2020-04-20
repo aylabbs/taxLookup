@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-hVpXlpdRmJ+uXGwD5W6HZMnR9ENcKVRn855pPbuI/mwPIEKAuKgTKgGksVGmlAvt" crossorigin="anonymous">
+    <title>Tax</title>
+</head>
+<body>
+  <div class="container mt-5">
+      <div class="container mt-5">
+          <div class="jumbotron jumbotron-fluid">
+              <div class="container">
+                <h1 class="display-4">Sales Tax Lookup</h1>
+                <p class="lead">Lookup Sales Tax rates by Zipcode</p>
+              </div>
+            </div>
+        <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Zip Code</label>
+                  <input type="text" class="form-control" id="searchbox"  placeholder="Enter zip">
+                  <button class="btn btn-success" id="search">Search</button>
+                  <small id="emailHelp" class="form-text text-muted">enter one zipcode</small>
+                </div>
+               
+              </form>
+              <div class="container mt-5">
+                    <% if (zipData.ZipCode) { %>
+                        <div id="result">
+                            <div class="card">
+                                    <div class="card-body">
+                                        <strong>Zip: <%= zipData.ZipCode %></strong> <br />
+                                        Tax Region: <%= zipData.TaxRegionName %> <br />
+                                        State: <%= zipData.State %> <br />
+                                        State tax rate: <%= zipData.StateRate * 100 %>% <br />
+                                        County Tax rate: <%= zipData.EstimatedCountyRate * 100 %>% <br />
+                                        City Tax rate: <%= zipData.EstimatedCityRate * 100 %>% <br />
+                                        <strong>Total Tax rate: <%= zipData.EstimatedCombinedRate * 100 %>% </strong><br />
+                                        Accuracy: <%= zipData.RiskLevel%> (lower is better)
+                                    </div>
+                                </div>
+                        </div>
+                      <% } %>
+                      
+                  
+              </div>
+              
+            </div>
+            </div>
+</body> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js" ></script>
+<script>
+$('#search').click(e => {
+    console.log(e)
+    e.preventDefault()
+    const zipcode = $('#searchbox').val().trim()
+    if (/^\d{5}$/.test( zipcode )) $(location).attr('href', '/' + zipcode );
+    else {
+        alert('Invalid Zip')
+        $('#searchbox').val('')
+    }
+
+
+})
+</script>
+</html>
